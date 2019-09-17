@@ -3,34 +3,24 @@ alert("Bonjour!");
 
 console.log("Le JS c'est cool!!!");
 
-var taskInput=document.getElementById("nouvelle-tache");
+var tacheInput=document.getElementById("nouvelle-tache");
 var addButton=document.getElementsByTagName("button")[0];
-var incompleteTaskHolder=document.getElementById("tache-a-faire");
-var completedTasksHolder=document.getElementById("tache-accomplie");
+var incompletetacheHolder=document.getElementById("tache-a-faire");
+var completedtachesHolder=document.getElementById("tache-accomplie");
 
 
-var createNewTaskElement=function(taskString){
+var createNewtacheElement=function(tacheString){
 
 	var listItem=document.createElement("li");
-
-
 	var checkBox=document.createElement("input");
-
 	var label=document.createElement("label");
-
 	var editerInput=document.createElement("input");
-
 	var editerButton=document.createElement("button");
-
 	var effacerButton=document.createElement("button");
 
-
-
-	label.innerText=taskString;
-
+	label.innerText=tacheString;
 	checkBox.type="checkbox";
 	editerInput.type="text";
-
 	editerButton.innerText="Editer";
 	editerButton.className="editer";
 	effacerButton.innerText="Effacer";
@@ -44,23 +34,22 @@ var createNewTaskElement=function(taskString){
 	listItem.appendChild(effacerButton);
 
 	return listItem;
-}
+};
 
 
 
-var addTask=function(){
+var addtache=function(){
 
-	var listItem=createNewTaskElement(taskInput.value);!!!!
+	var listItemName = tacheInput.value || "New Item";   // We hold the current value or provide the default one
+   var listItem = createNewtacheElement(listItemName);  // Create a new list item with the text from #new-tache
+   incompletetachesHolder.appendChild(listItem);        // Append listItem to incompletetachesHolder
+   binTacheEvents(listItem, tacheCompleted);            // We bind it to the incomplete holder
+   tacheInput.value = "";
 
-	incompleteTaskHolder.appendChild(listItem);
-	bindTaskEvents(listItem, taskCompleted);
-
-	taskInput.value="";
-
-}
+};
 
 
-var editerTask=function(){
+var editertache=function(){
 
 var listItem=this.parentNode;
  var button = listItem.getElementsByTagName("button")[0];
@@ -69,82 +58,80 @@ var label=listItem.querySelector("label");
 var containsClass=listItem.classList.contains("editerMode");
 
 		if(containsClass){
-
-
 			label.innerText=editerInput.value;
-      button.innerText = "Edit";
+      button.innerText = "Editer";
 		}else{
 			editerInput.value=label.innerText;
-      button.innerText = "Save"; 
+      button.innerText = "Sauvegarder";
 		}
 
 		listItem.classList.toggle("editerMode");
 }
 
 
-var effacerTask=function(){
-
+var effacertache=function(){
 		var listItem=this.parentNode;
 		var ul=listItem.parentNode;
-
 		ul.removeChild(listItem);
 
-}
+};
+var addtache = function() {                            // Add a new tache
+  var listItemName = tacheInput.value || "New Item";   // We hold the current value or provide the default one
+  var listItem = createNewtacheElement(listItemName);  // Create a new list item with the text from #new-tache
+  incompletetacheHolder.appendChild(listItem);        // Append listItem to incompletetacheHolder
+  binTacheEvents(listItem, tacheCompleted);            // We bind it to the incomplete holder
+  tacheInput.value = "";                               // Resets the field
+};
 
 
-
-var taskCompleted=function(){
-
+var tacheCompleted=function(){
 	var listItem=this.parentNode;
-	completedTasksHolder.appendChild(listItem);
-				bindTaskEvents(listItem, taskIncomplete);
+	completedtachesHolder.appendChild(listItem);
+				binTacheEvents(listItem, tacheIncomplete);
 
-}
+};
 
 
-var taskIncomplete=function(){
+var tacheIncomplete=function(){
 
 		var listItem=this.parentNode;
-	incompleteTaskHolder.appendChild(listItem);
-			bindTaskEvents(listItem,taskCompleted);
-}
+	incompletetacheHolder.appendChild(listItem);
+			binTacheEvents(listItem,tacheCompleted);
+};
 
 
-
-var ajaxRequest=function(){
-
-}
-
-addButton.onclick=addTask;
-addButton.addEventListener("click",addTask);
+addButton.addEventListener("click",addtache);
 addButton.addEventListener("click",ajaxRequest);
 
 
-var bindTaskEvents=function(taskListItem,checkBoxEventHandler){
+var binTacheEvents=function(tacheListItem,checkBoxEventHandler){
 
-	var checkBox=taskListItem.querySelector("input[type=checkbox]");
-	var editerButton=taskListItem.querySelector("button.editer");
-	var effacerButton=taskListItem.querySelector("button.effacer");
+	var checkBox=tacheListItem.querySelector("input[type=checkbox]");
+	var editerButton=tacheListItem.querySelector("button.editer");
+	var effacerButton=tacheListItem.querySelector("button.effacer");
 
+			editerButton.onclick=editertache;
 
-
-			editerButton.onclick=editerTask;
-
-			effacerButton.onclick=effacerTask;
+			effacerButton.onclick=effacertache;
 
 			checkBox.onchange=checkBoxEventHandler;
-}
+};
+var ajaxRequest=function(){
 
+};
 
-	for (var i=0; i<incompleteTaskHolder.children.length;i++){
+addButton.addEventListener("click", addtache);      // Adds event listener for the click handler to the addtache function
+addButton.addEventListener("click", ajaxRequest);  //
 
-		bindTaskEvents(incompleteTaskHolder.children[i],taskCompleted);
+	for (var i=0; i<incompletetacheHolder.children.length;i++){
+
+		binTacheEvents(incompletetacheHolder.children[i],tacheCompleted);
 	}
 
 
-	for (var i=0; i<completedTasksHolder.children.length;i++){
+	for (var i=0; i<completedtachesHolder.children.length;i++){
 
-		bindTaskEvents(completedTasksHolder.children[i],taskIncomplete);
+		binTacheEvents(completedtachesHolder.children[i],tacheIncomplete);
 	}
 
 document.getElementById("txtjs").innerHTML = "faire une todolist";
