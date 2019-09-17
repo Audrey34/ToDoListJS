@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <title>ToDoList JS</title>
+
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="titre">To Do List :</h1>
+      <p>
+        <label for="nouvelle-tache">Tâche à ajouter:</label><input id="nouvelle-tache" type="text"><button>Ajouter</button>
+      </p>
+
+      <h3>A faire:</h3>
+      <ul id="tache-a-faire">
+         <li><input type="checkbox"><label id="txtjs"></label><input type="text"><button class="editer">Editer</button><button class="effacer">Effacer</button></li>
+         <li class="editMode"><input type="checkbox"><label>au cinéma</label><input type="text" value="au cinéma"><button class="edit">Save</button><button class="effacer">Effacer</button></li>
+
+
+      </ul>
+
+      <h3>Tâches accomplies:</h3>
+      <ul id="tache-accomplie">
+      </ul>
+    </div>
+
+    <script type="text/javascript" src="script.js"></script>
+
+  </body>
+</html>
